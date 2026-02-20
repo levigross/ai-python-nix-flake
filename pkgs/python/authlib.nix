@@ -4,7 +4,6 @@
   lib,
   pythonMultipart,
 }:
-
 authlib.overridePythonAttrs (old: rec {
   version = "1.6.5";
 
@@ -15,7 +14,9 @@ authlib.overridePythonAttrs (old: rec {
     hash = "sha256-lz2cPqag6lZ9PXb3O/SV4buIPDDzhI71/teqWHLG+vE=";
   };
 
-  nativeCheckInputs = (old.nativeCheckInputs or [ ]) ++ [
-    pythonMultipart
-  ];
+  nativeCheckInputs =
+    (old.nativeCheckInputs or [])
+    ++ [
+      pythonMultipart
+    ];
 })

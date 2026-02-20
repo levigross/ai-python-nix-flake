@@ -19,7 +19,6 @@
   uvicorn,
   pythonOlder,
 }:
-
 buildPythonPackage rec {
   pname = "mcp";
   version = "1.26.0";
@@ -37,23 +36,25 @@ buildPythonPackage rec {
     uvDynamicVersioning
   ];
 
-  dependencies = [
-    anyio
-    httpx
-    httpxSse
-    jsonschema
-    pydantic
-    pydanticSettings
-    pyjwt
-    pythonMultipart
-    sseStarlette
-    starlette
-    typingInspection
-    uvicorn
-  ] ++ lib.optionals (pythonOlder "3.11") [ typingExtensions ];
+  dependencies =
+    [
+      anyio
+      httpx
+      httpxSse
+      jsonschema
+      pydantic
+      pydanticSettings
+      pyjwt
+      pythonMultipart
+      sseStarlette
+      starlette
+      typingInspection
+      uvicorn
+    ]
+    ++ lib.optionals (pythonOlder "3.11") [typingExtensions];
 
   doCheck = false;
-  pythonImportsCheck = [ "mcp" ];
+  pythonImportsCheck = ["mcp"];
 
   meta = with lib; {
     description = "Model Context Protocol SDK";

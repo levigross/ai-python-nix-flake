@@ -1,15 +1,13 @@
-{ ... }:
-let
+{...}: let
   aiPythonOverlay = import ../overlays/ai-python.nix;
   aiPythonFlakeModule = import ./flake-parts/ai-python.nix;
 
-  aiPythonNixosModule = { ... }: {
-    imports = [ ./nixos/ai-python.nix ];
-    nixpkgs.overlays = [ aiPythonOverlay ];
+  aiPythonNixosModule = {...}: {
+    imports = [./nixos/ai-python.nix];
+    nixpkgs.overlays = [aiPythonOverlay];
   };
-in
-{
-  imports = [ aiPythonFlakeModule ];
+in {
+  imports = [aiPythonFlakeModule];
 
   flake = {
     flakeModules.default = aiPythonFlakeModule;

@@ -1,10 +1,11 @@
 final: prev: {
   pythonPackagesExtensions =
-    (prev.pythonPackagesExtensions or [ ])
+    (prev.pythonPackagesExtensions or [])
     ++ [
-      (pyFinal: pyPrev: import ../pkgs/python {
-        python = pyFinal;
-        pythonPrev = pyPrev;
-      })
+      (pyFinal: pyPrev:
+        import ../pkgs/python {
+          python = pyFinal;
+          pythonPrev = pyPrev;
+        })
     ];
 }

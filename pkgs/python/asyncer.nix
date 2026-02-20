@@ -6,7 +6,6 @@
   anyio,
   typingExtensions,
 }:
-
 buildPythonPackage rec {
   pname = "asyncer";
   version = "0.0.8";
@@ -19,7 +18,7 @@ buildPythonPackage rec {
     hash = "sha256-SbByOiTYzp+G+SvsDqXOQBAG6nigtBXiQmfGgfKRqvM=";
   };
 
-  build-system = [ pdmBackend ];
+  build-system = [pdmBackend];
 
   dependencies = [
     anyio
@@ -27,7 +26,7 @@ buildPythonPackage rec {
   ];
 
   doCheck = false;
-  pythonImportsCheck = [ "asyncer" ];
+  pythonImportsCheck = ["asyncer"];
 
   meta = with lib; {
     description = "Async and await focused on developer ergonomics";

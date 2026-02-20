@@ -11,7 +11,6 @@
   typingExtensions,
   pythonOlder,
 }:
-
 buildPythonPackage rec {
   pname = "claude-code-sdk";
   version = "0.1.39";
@@ -24,12 +23,14 @@ buildPythonPackage rec {
     hash = "sha256-Us2YNfm2WOZVAgNMLhH8ZIWqdSwD2wGHqFQxukDVT+Q=";
   };
 
-  build-system = [ hatchling ];
+  build-system = [hatchling];
 
-  dependencies = [
-    anyio
-    mcp
-  ] ++ lib.optionals (pythonOlder "3.11") [ typingExtensions ];
+  dependencies =
+    [
+      anyio
+      mcp
+    ]
+    ++ lib.optionals (pythonOlder "3.11") [typingExtensions];
 
   nativeCheckInputs = [
     pytestCheckHook
@@ -50,7 +51,7 @@ buildPythonPackage rec {
   ];
 
   doCheck = true;
-  pythonImportsCheck = [ "claude_agent_sdk" ];
+  pythonImportsCheck = ["claude_agent_sdk"];
 
   meta = with lib; {
     description = "Python SDK for Claude Code";

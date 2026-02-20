@@ -10,7 +10,6 @@
   keyring,
   typingExtensions,
 }:
-
 buildPythonPackage rec {
   pname = "py-key-value-aio";
   version = "0.4.4";
@@ -23,7 +22,7 @@ buildPythonPackage rec {
     hash = "sha256-JznZW3FOKlhZD42Ng108tNB4bNiEad7QBiu8RmflTXM=";
   };
 
-  build-system = [ uvBuild ];
+  build-system = [uvBuild];
 
   postPatch = ''
     substituteInPlace pyproject.toml \
@@ -45,7 +44,7 @@ buildPythonPackage rec {
   ];
 
   doCheck = false;
-  pythonImportsCheck = [ "key_value" ];
+  pythonImportsCheck = ["key_value"];
 
   meta = with lib; {
     description = "Async key-value store interfaces";

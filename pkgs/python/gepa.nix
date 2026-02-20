@@ -6,7 +6,6 @@
   setuptools,
   wheel,
 }:
-
 buildPythonPackage rec {
   pname = "gepa";
   version = "0.0.26";
@@ -31,7 +30,7 @@ buildPythonPackage rec {
   '';
 
   doCheck = false;
-  pythonImportsCheck = [ "gepa" ];
+  pythonImportsCheck = ["gepa"];
 
   meta = with lib; {
     description = "Framework for optimizing textual system components";

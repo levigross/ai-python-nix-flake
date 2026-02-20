@@ -1,8 +1,7 @@
 {
   python,
   pythonPrev ? python,
-}:
-{
+}: {
   authlib = python.callPackage ./authlib.nix {
     authlib = pythonPrev.authlib;
     pythonMultipart = python."python-multipart";
@@ -32,7 +31,7 @@
     typingExtensions = python."typing-extensions";
   };
 
-  "json-repair" = python.callPackage ./json-repair.nix { };
+  "json-repair" = python.callPackage ./json-repair.nix {};
 
   pydocket = python.callPackage ./pydocket.nix {
     fakeredis = python.fakeredis;
@@ -77,7 +76,7 @@
     typingExtensions = python."typing-extensions";
   };
 
-  gepa = python.callPackage ./gepa.nix { };
+  gepa = python.callPackage ./gepa.nix {};
 
   dspy = python.callPackage ./dspy.nix {
     asyncer = python.asyncer;

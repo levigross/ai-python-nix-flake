@@ -25,7 +25,6 @@
   tqdm,
   xxhash,
 }:
-
 buildPythonPackage rec {
   pname = "dspy";
   version = "3.1.3";
@@ -38,7 +37,7 @@ buildPythonPackage rec {
     hash = "sha256-Mfl5ac367QnFgSHXTItBAQ0ksHR1mEKIjyptAbt/Bvc=";
   };
 
-  build-system = [ setuptools ];
+  build-system = [setuptools];
 
   postPatch = ''
     substituteInPlace pyproject.toml \
@@ -72,10 +71,10 @@ buildPythonPackage rec {
     pytestMock
   ];
 
-  pytestFlagsArray = [ "tests/primitives" ];
+  pytestFlagsArray = ["tests/primitives"];
 
   doCheck = true;
-  pythonImportsCheck = [ "dspy" ];
+  pythonImportsCheck = ["dspy"];
 
   meta = with lib; {
     description = "Programming framework for language models";

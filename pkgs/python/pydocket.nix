@@ -20,7 +20,6 @@
   typingExtensions,
   pythonOlder,
 }:
-
 buildPythonPackage rec {
   pname = "pydocket";
   version = "0.17.8";
@@ -43,25 +42,26 @@ buildPythonPackage rec {
     hatchVcs
   ];
 
-  dependencies = [
-    cloudpickle
-    croniter
-    fakeredis
-    lupa
-    opentelemetryApi
-    prometheusClient
-    pyKeyValueAio
-    pythonJsonLogger
-    redis
-    rich
-    typer
-    typingExtensions
-  ]
-  ++ lib.optionals (pythonOlder "3.11") [ exceptiongroup ]
-  ++ lib.optionals (pythonOlder "3.11" && taskgroup != null) [ taskgroup ];
+  dependencies =
+    [
+      cloudpickle
+      croniter
+      fakeredis
+      lupa
+      opentelemetryApi
+      prometheusClient
+      pyKeyValueAio
+      pythonJsonLogger
+      redis
+      rich
+      typer
+      typingExtensions
+    ]
+    ++ lib.optionals (pythonOlder "3.11") [exceptiongroup]
+    ++ lib.optionals (pythonOlder "3.11" && taskgroup != null) [taskgroup];
 
   doCheck = false;
-  pythonImportsCheck = [ "docket" ];
+  pythonImportsCheck = ["docket"];
 
   meta = with lib; {
     description = "Distributed background task system for Python functions";

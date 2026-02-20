@@ -43,7 +43,6 @@
   watchfiles,
   websockets,
 }:
-
 buildPythonPackage rec {
   pname = "fastmcp";
   version = "3.0.0";
@@ -105,42 +104,42 @@ buildPythonPackage rec {
   ];
 
   preCheck = ''
-    # uv-based transport tests need writable cache dirs and must avoid managed
-    # Python discovery (which probes non-Nix FHS paths).
-    export HOME="$TMPDIR/home"
-    export XDG_CACHE_HOME="$TMPDIR/xdg-cache"
-    export UV_CACHE_DIR="$TMPDIR/uv-cache"
-    export UV_NO_MANAGED_PYTHON=1
-    export UV_PYTHON_DOWNLOADS=never
-    export UV_PYTHON="${python.interpreter}"
-    mkdir -p "$HOME" "$XDG_CACHE_HOME" "$UV_CACHE_DIR"
+        # uv-based transport tests need writable cache dirs and must avoid managed
+        # Python discovery (which probes non-Nix FHS paths).
+        export HOME="$TMPDIR/home"
+        export XDG_CACHE_HOME="$TMPDIR/xdg-cache"
+        export UV_CACHE_DIR="$TMPDIR/uv-cache"
+        export UV_NO_MANAGED_PYTHON=1
+        export UV_PYTHON_DOWNLOADS=never
+        export UV_PYTHON="${python.interpreter}"
+        mkdir -p "$HOME" "$XDG_CACHE_HOME" "$UV_CACHE_DIR"
 
-    # mcp stdio subprocesses inherit only an allowlisted environment.
-    # Add PYTHONPATH to that allowlist during tests so child Python processes
-    # can import fastmcp + deps from the Nix check environment.
-    mkdir -p .nix-test-hooks
-    cat > .nix-test-hooks/sitecustomize.py <<'PY'
-try:
-    import mcp.client.stdio as _mcp_stdio
-except Exception:
-    _mcp_stdio = None
+        # mcp stdio subprocesses inherit only an allowlisted environment.
+        # Add PYTHONPATH to that allowlist during tests so child Python processes
+        # can import fastmcp + deps from the Nix check environment.
+        mkdir -p .nix-test-hooks
+        cat > .nix-test-hooks/sitecustomize.py <<'PY'
+    try:
+        import mcp.client.stdio as _mcp_stdio
+    except Exception:
+        _mcp_stdio = None
 
-if _mcp_stdio is not None:
-    inherited = list(_mcp_stdio.DEFAULT_INHERITED_ENV_VARS)
-    required = [
-        "PYTHONPATH",
-        "XDG_CACHE_HOME",
-        "UV_CACHE_DIR",
-        "UV_NO_MANAGED_PYTHON",
-        "UV_PYTHON_DOWNLOADS",
-        "UV_PYTHON",
-    ]
-    for key in required:
-        if key not in inherited:
-            inherited.append(key)
-    _mcp_stdio.DEFAULT_INHERITED_ENV_VARS = inherited
-PY
-    export PYTHONPATH="$PWD/.nix-test-hooks:$PYTHONPATH"
+    if _mcp_stdio is not None:
+        inherited = list(_mcp_stdio.DEFAULT_INHERITED_ENV_VARS)
+        required = [
+            "PYTHONPATH",
+            "XDG_CACHE_HOME",
+            "UV_CACHE_DIR",
+            "UV_NO_MANAGED_PYTHON",
+            "UV_PYTHON_DOWNLOADS",
+            "UV_PYTHON",
+        ]
+        for key in required:
+            if key not in inherited:
+                inherited.append(key)
+        _mcp_stdio.DEFAULT_INHERITED_ENV_VARS = inherited
+    PY
+        export PYTHONPATH="$PWD/.nix-test-hooks:$PYTHONPATH"
   '';
 
   pytestFlagsArray = [
@@ -166,7 +165,7 @@ PY
   ];
 
   doCheck = true;
-  pythonImportsCheck = [ "fastmcp" ];
+  pythonImportsCheck = ["fastmcp"];
 
   meta = with lib; {
     description = "Fast, Pythonic framework for MCP servers and clients";

@@ -4,7 +4,6 @@
   fetchFromGitHub,
   setuptools,
 }:
-
 buildPythonPackage rec {
   pname = "json-repair";
   version = "0.54.2";
@@ -17,10 +16,10 @@ buildPythonPackage rec {
     hash = "sha256-OwzyDrdN6jRxA/KthmrGgtfE1ZN89XebxWgtovoK2Nk=";
   };
 
-  build-system = [ setuptools ];
+  build-system = [setuptools];
 
   doCheck = false;
-  pythonImportsCheck = [ "json_repair" ];
+  pythonImportsCheck = ["json_repair"];
 
   meta = with lib; {
     description = "Repair broken JSON strings";
