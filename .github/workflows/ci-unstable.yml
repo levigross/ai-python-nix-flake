@@ -1,0 +1,51 @@
+name: CI (nixpkgs-unstable)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-unstable-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  nix-check-unstable:
+    name: Nix Flake Check (unstable)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+          submodules: false
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
+
+      - name: Configure Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
+
+      - name: Validate Flake Outputs (unstable)
+        run: nix flake check -L --override-input nixpkgs github:NixOS/nixpkgs/nixpkgs-unstable
+
+      - name: Build Core Packages (unstable)
+        run: nix build -L --override-input nixpkgs github:NixOS/nixpkgs/nixpkgs-unstable .#fastmcp-ci .#claude-code-sdk .#dspy .#python-ci
+
+      - name: Verify Python Interpreter Environment (unstable)
+        run: |
+          nix shell --override-input nixpkgs github:NixOS/nixpkgs/nixpkgs-unstable .#python-ci -c python - <<'PY'
+          import fastmcp
+          import claude_agent_sdk
+          import dspy
+          print(f"fastmcp={fastmcp.__version__}")
+          print(f"claude_agent_sdk={claude_agent_sdk.__version__}")
+          print(f"dspy={dspy.__version__}")
+          PY
