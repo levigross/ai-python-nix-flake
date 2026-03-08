@@ -26,7 +26,8 @@ buildPythonPackage rec {
 
   postPatch = ''
     substituteInPlace pyproject.toml \
-      --replace-fail 'version="0.0.25"' 'version="${version}"'
+      --replace-fail 'version="0.0.25"' 'version="${version}"' \
+      --replace-fail 'license = { text = "MIT" }' 'license = "MIT"'
   '';
 
   doCheck = false;

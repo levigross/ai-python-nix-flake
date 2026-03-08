@@ -4,6 +4,7 @@
   fetchFromGitHub,
   pdmBackend,
   anyio,
+  sniffio,
   typingExtensions,
 }:
 buildPythonPackage rec {
@@ -22,6 +23,7 @@ buildPythonPackage rec {
 
   dependencies = [
     anyio
+    sniffio
     typingExtensions
   ];
 
