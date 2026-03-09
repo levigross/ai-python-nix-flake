@@ -18,18 +18,19 @@
   taskgroup ? null,
   typer,
   typingExtensions,
+  uncalledFor,
   pythonOlder,
 }:
 buildPythonPackage rec {
   pname = "pydocket";
-  version = "0.17.8";
+  version = "0.18.1";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "chrisguidry";
     repo = "docket";
     rev = version;
-    hash = "sha256-rQMCNqmaE2vRt0Yx9z7O7pHsyBez0WfMfvgzyyTb8sY=";
+    hash = "sha256-Z+lIBvJl5t6ITgrEPkdEDIrr6RWpgxbsUyXlo/uHpHs=";
   };
 
   postPatch = ''
@@ -56,6 +57,7 @@ buildPythonPackage rec {
       rich
       typer
       typingExtensions
+      uncalledFor
     ]
     ++ lib.optionals (pythonOlder "3.11") [exceptiongroup]
     ++ lib.optionals (pythonOlder "3.11" && taskgroup != null) [taskgroup];

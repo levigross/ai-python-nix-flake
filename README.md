@@ -4,7 +4,7 @@
 
 Nix packaging for:
 
-- `fastmcp` v3 (`fastmcp` 3.0.0)
+- `fastmcp` v3 (`fastmcp` 3.1.0)
 - `claude-code-sdk` (Python SDK from `anthropics/claude-agent-sdk-python`, 0.1.39)
 - `dspy` (3.1.3)
 
@@ -51,16 +51,13 @@ Adds an option to install a Python environment with these packages:
 
 For each supported system, these are available under `packages.<system>`:
 
-- `python` (standard interpreter env with `fastmcp`, `claude-code-sdk`, `dspy`)
-- `python-with-ai-packages` (same as `python`, explicit alias)
+- `python` (fully-featured interpreter env with all packages and extras)
 - `fastmcp`
 - `claude-code-sdk`
 - `dspy`
-- `fastmcp-with-all-extras`
-- `claude-code-sdk-with-all-extras`
-- `dspy-with-all-extras`
-- `all-with-all-extras`
 - `default` (same env as `python`)
+- `fastmcp-pyXYZ` for each interpreter-specific FastMCP build that evaluates in the pinned nixpkgs input
+- `python-pyXYZ` for each interpreter-specific fully-featured env (extras that aren't available for a given interpreter are silently skipped)
 
 ## Quick Start (This Repo)
 
@@ -69,13 +66,6 @@ Run a Python interpreter that already has all three core packages:
 ```bash
 nix shell .#python
 python -c "import fastmcp, claude_agent_sdk, dspy; print('ok')"
-```
-
-Use the all-extras environment:
-
-```bash
-nix shell .#all-with-all-extras
-python -c "import fastmcp, claude_agent_sdk, dspy; print('extras ok')"
 ```
 
 ## Use From Another Flake (flake-parts)
@@ -100,7 +90,6 @@ Then use outputs like:
 
 - `.#packages.x86_64-linux.python`
 - `.#packages.x86_64-linux.fastmcp`
-- `.#packages.x86_64-linux.all-with-all-extras`
 
 ## Use From Another Flake (Overlay)
 
@@ -162,13 +151,9 @@ Then use outputs like:
 
 ## Extras Policy
 
-`*-with-all-extras` outputs are intended to be practical, test-friendly environments that include optional dependency groups used in upstream extras/dev/test workflows.
+All `python` environments are fully featured — they include the core frameworks plus all available extras (dev tools, test runners, optional integrations). Extras that aren't available for a given Python interpreter are silently skipped via `tryEval` probing.
 
-Examples:
-
-- `fastmcp-with-all-extras` includes support for `anthropic`, `azure`, `openai`, and `tasks` extras.
-- `claude-code-sdk-with-all-extras` includes SDK dev/test extras.
-- `dspy-with-all-extras` includes optional extras plus common test/dev extras used upstream.
+- `fastmcp` includes all upstream extras: `anthropic`, `azure`, `gemini`, `openai`, `tasks` (pydocket), `apps` (prefab), and `code-mode` (pydantic-monty).
 
 ## Testing
 
@@ -181,6 +166,10 @@ nix build .#claude-code-sdk -L
 nix build .#dspy -L
 nix build -L --override-input nixpkgs github:NixOS/nixpkgs/nixpkgs-unstable .#fastmcp .#claude-code-sdk .#dspy .#python
 ```
+
+### Python version coverage
+
+Versioned outputs are generated for Python 3.12 and 3.13 (the two current stable releases).
 
 ### Test skip policy
 
