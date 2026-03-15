@@ -4,7 +4,7 @@
 
 Nix packaging for:
 
-- `fastmcp` v3 (`fastmcp` 3.1.0)
+- `fastmcp` v3 (`fastmcp` 3.1.1)
 - `claude-code-sdk` (Python SDK from `anthropics/claude-agent-sdk-python`, 0.1.39)
 - `dspy` (3.1.3)
 
