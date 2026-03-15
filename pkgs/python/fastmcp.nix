@@ -49,14 +49,14 @@
 }:
 buildPythonPackage rec {
   pname = "fastmcp";
-  version = "3.1.0";
+  version = "3.1.1";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "PrefectHQ";
     repo = "fastmcp";
     rev = "v${version}";
-    hash = "sha256-MnU69JuMlRwiUFIOaws9N7Hw6oDnrIIwCoWuHFrvbHQ=";
+    hash = "sha256-75TAh1Dymp/4B4PrCVxQ/9Fh8xVpvTNMyQz81980loQ=";
   };
 
   build-system = [
