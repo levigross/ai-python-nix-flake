@@ -5,7 +5,7 @@
   hatchling,
   hatchVcs,
   cloudpickle,
-  croniter,
+  cronsim,
   exceptiongroup,
   fakeredis,
   lupa,
@@ -23,14 +23,14 @@
 }:
 buildPythonPackage rec {
   pname = "pydocket";
-  version = "0.18.1";
+  version = "0.19.1";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "chrisguidry";
     repo = "docket";
     rev = version;
-    hash = "sha256-Z+lIBvJl5t6ITgrEPkdEDIrr6RWpgxbsUyXlo/uHpHs=";
+    hash = "sha256-215VlCGwQx7vf5nFdu38PP21X911bo0i9rt7LMolPaw=";
   };
 
   postPatch = ''
@@ -46,7 +46,7 @@ buildPythonPackage rec {
   dependencies =
     [
       cloudpickle
-      croniter
+      cronsim
       fakeredis
       lupa
       opentelemetryApi

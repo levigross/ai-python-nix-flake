@@ -19,6 +19,11 @@
     typingExtensions = python."typing-extensions";
   };
 
+  griffelib = python.callPackage ./griffelib.nix {
+    pdmBackend = python."pdm-backend";
+    uvDynamicVersioning = python."uv-dynamic-versioning";
+  };
+
   "json-repair" = python.callPackage ./json-repair.nix {};
 
   "uncalled-for" = python.callPackage ./uncalled-for.nix {
@@ -29,7 +34,9 @@
     uvDynamicVersioning = python."uv-dynamic-versioning";
   };
 
-  "pydantic-monty" = python.callPackage ./pydantic-monty.nix {};
+  "pydantic-monty" = python.callPackage ./pydantic-monty.nix {
+    typingExtensions = python."typing-extensions";
+  };
 
   pydocket = python.callPackage ./pydocket.nix {
     fakeredis = python.fakeredis;

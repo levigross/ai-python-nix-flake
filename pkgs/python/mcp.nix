@@ -21,14 +21,14 @@
 }:
 buildPythonPackage rec {
   pname = "mcp";
-  version = "1.26.0";
+  version = "1.27.0";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "modelcontextprotocol";
     repo = "python-sdk";
     rev = "v${version}";
-    hash = "sha256-TGkAyuBcIstL2BCZYBWoi7PhnhoBvap67sLWGe0QUoU=";
+    hash = "sha256-qvbGyF0PVC626yCgUqOYmA1zOmvI3/bC7l7HhfOtKH8=";
   };
 
   build-system = [

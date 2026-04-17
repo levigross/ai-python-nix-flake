@@ -10,14 +10,14 @@
 }:
 buildPythonPackage rec {
   pname = "prefab-ui";
-  version = "0.10.1";
+  version = "0.19.1";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "PrefectHQ";
     repo = "prefab";
     rev = "v${version}";
-    hash = "sha256-twy8g7daMZhg9uRc9LdtDYFGCt0bK9p3pl3lgtwaG1Y=";
+    hash = "sha256-caSsMR6Il4D1l9Y1ScdN5HZ4TPG2YyB6JzctDt+W3WE=";
   };
 
   postPatch = ''

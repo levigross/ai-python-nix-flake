@@ -4,8 +4,8 @@
 
 Nix packaging for:
 
-- `fastmcp` v3 (`fastmcp` 3.1.1)
-- `claude-code-sdk` (Python SDK from `anthropics/claude-agent-sdk-python`, 0.1.39)
+- `fastmcp` v3 (`fastmcp` 3.2.4)
+- `claude-code-sdk` (Python SDK from `anthropics/claude-agent-sdk-python`, 0.1.61)
 - `dspy` (3.1.3)
 
 This repo is designed to be easy to consume from:

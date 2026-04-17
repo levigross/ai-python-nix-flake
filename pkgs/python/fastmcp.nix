@@ -14,6 +14,7 @@
   emailValidator,
   exceptiongroup,
   fastapi,
+  griffelib,
   httpx,
   jsonref,
   jsonschemaPath,
@@ -49,14 +50,14 @@
 }:
 buildPythonPackage rec {
   pname = "fastmcp";
-  version = "3.1.1";
+  version = "3.2.4";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "PrefectHQ";
     repo = "fastmcp";
     rev = "v${version}";
-    hash = "sha256-75TAh1Dymp/4B4PrCVxQ/9Fh8xVpvTNMyQz81980loQ=";
+    hash = "sha256-rJpxPvqAaa6/vXhG1+R9dI32cY/54e6I+F/zyBVoqBM=";
   };
 
   build-system = [
@@ -72,6 +73,7 @@ buildPythonPackage rec {
     emailValidator
     exceptiongroup
     googleGenai
+    griffelib
     httpx
     jsonref
     jsonschemaPath
@@ -171,6 +173,8 @@ buildPythonPackage rec {
     "--ignore=tests/integration_tests"
     # Upstream experimental suite is intentionally unstable/non-gating.
     "--ignore=tests/experimental"
+    # Doc example tests require pytest-examples which is not packaged.
+    "--ignore=tests/docs"
     # This in-memory transport test sets a 50ms client-wide timeout, which is
     # too tight for builder-side session initialization.
     "--deselect=tests/client/client/test_timeout.py::TestTimeout::test_timeout"

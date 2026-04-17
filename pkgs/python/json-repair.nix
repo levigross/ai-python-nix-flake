@@ -2,24 +2,28 @@
   lib,
   buildPythonPackage,
   fetchFromGitHub,
+  jsonschema,
   pytestCheckHook,
   setuptools,
 }:
 buildPythonPackage rec {
   pname = "json-repair";
-  version = "0.55.2";
+  version = "0.59.4";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "mangiucugna";
     repo = "json_repair";
     tag = "v${version}";
-    hash = "sha256-CzoGu6JNOaqdLZK4DyDUv+TMIA+k9AlZZy1fKnpMbkE=";
+    hash = "sha256-tmiQ4ZHXd1FMVfZlJwdGqx5yxlxsImI7mnjICe3+maI=";
   };
 
   build-system = [setuptools];
 
-  nativeCheckInputs = [pytestCheckHook];
+  nativeCheckInputs = [
+    jsonschema
+    pytestCheckHook
+  ];
 
   disabledTestPaths = [
     # Benchmark tests are non-deterministic and not needed for package validity.

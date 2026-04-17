@@ -19,6 +19,7 @@
     dirtyEquals = python."dirty-equals";
     emailValidator = python."email-validator";
     fastapi = python.fastapi;
+    griffelib = python.griffelib;
     inlineSnapshot = python."inline-snapshot";
     jsonschemaPath = python."jsonschema-path";
     mcp = python.mcp;

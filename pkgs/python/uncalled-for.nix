@@ -7,14 +7,14 @@
 }:
 buildPythonPackage rec {
   pname = "uncalled-for";
-  version = "0.2.0";
+  version = "0.3.1";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "chrisguidry";
     repo = "uncalled-for";
     rev = version;
-    hash = "sha256-+oc4ZQWp3Szkts/T0+iHrSXrq5NoIdbs15FRBGeYleQ=";
+    hash = "sha256-+akXLsfto3FNbkpsPPwN1DQmvu3BpTafRbqLmLwtqek=";
   };
 
   postPatch = ''

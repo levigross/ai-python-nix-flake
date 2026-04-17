@@ -6,22 +6,23 @@
   cargo,
   rustc,
   maturin,
+  typingExtensions,
 }:
 buildPythonPackage rec {
   pname = "pydantic-monty";
-  version = "0.0.7";
+  version = "0.0.11";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "pydantic";
     repo = "monty";
     rev = "v${version}";
-    hash = "sha256-6iYQ5OyjJhArZ3rxM6z0l/qgxTY3ja+rMODA6/EN6kw=";
+    hash = "sha256-PRP8XcgeNVnc+2dWHxpizjvAtSjfqtkEXckXjPCRoJI=";
   };
 
   cargoDeps = rustPlatform.fetchCargoVendor {
     inherit src;
-    hash = "sha256-NVBWA9oURCMF767af3rWZU0XfWZKBIuglG6OOLekKtI=";
+    hash = "sha256-L18Prmtv+jKs8jG1HNSMp4hDwpDgLc1x9CV39WYFUK8=";
   };
 
   buildAndTestSubdir = "crates/monty-python";
@@ -33,6 +34,10 @@ buildPythonPackage rec {
     rustPlatform.maturinBuildHook
     cargo
     rustc
+  ];
+
+  dependencies = [
+    typingExtensions
   ];
 
   pythonImportsCheck = ["pydantic_monty"];
