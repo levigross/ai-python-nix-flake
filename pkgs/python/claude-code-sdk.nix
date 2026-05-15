@@ -5,6 +5,7 @@
   hatchling,
   anyio,
   mcp,
+  sniffio,
   pytestCheckHook,
   pytestAsyncio,
   trio,
@@ -13,14 +14,14 @@
 }:
 buildPythonPackage rec {
   pname = "claude-code-sdk";
-  version = "0.1.61";
+  version = "0.2.82";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "anthropics";
     repo = "claude-agent-sdk-python";
     rev = "v${version}";
-    hash = "sha256-PrWOsQM7lGBAL/A85vo3yCrRuEiFZSTFN49+awARloY=";
+    hash = "sha256-mv04UsKb8hPNFYhOCQcgav9FxwKNswWpX/TkiGcqEHI=";
   };
 
   build-system = [hatchling];
@@ -29,6 +30,7 @@ buildPythonPackage rec {
     [
       anyio
       mcp
+      sniffio
     ]
     ++ lib.optionals (pythonOlder "3.11") [typingExtensions];
 

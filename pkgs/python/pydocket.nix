@@ -4,11 +4,10 @@
   fetchFromGitHub,
   hatchling,
   hatchVcs,
+  burnerRedis,
   cloudpickle,
   cronsim,
   exceptiongroup,
-  fakeredis,
-  lupa,
   opentelemetryApi,
   prometheusClient,
   pyKeyValueAio,
@@ -23,14 +22,14 @@
 }:
 buildPythonPackage rec {
   pname = "pydocket";
-  version = "0.19.1";
+  version = "0.20.2";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "chrisguidry";
     repo = "docket";
     rev = version;
-    hash = "sha256-215VlCGwQx7vf5nFdu38PP21X911bo0i9rt7LMolPaw=";
+    hash = "sha256-KEKk9/tewl46GkZ7DV6MixAzz9ZKMIqjwzj5kZ38AFk=";
   };
 
   postPatch = ''
@@ -45,10 +44,9 @@ buildPythonPackage rec {
 
   dependencies =
     [
+      burnerRedis
       cloudpickle
       cronsim
-      fakeredis
-      lupa
       opentelemetryApi
       prometheusClient
       pyKeyValueAio

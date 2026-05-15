@@ -8,6 +8,8 @@
 
   fakeredis = python.callPackage ./fakeredis.nix {};
 
+  "burner-redis" = python.callPackage ./burner-redis.nix {};
+
   "py-key-value-aio" = python.callPackage ./py-key-value-aio.nix {
     typingExtensions = python."typing-extensions";
     uvBuild = python."uv-build";
@@ -39,7 +41,7 @@
   };
 
   pydocket = python.callPackage ./pydocket.nix {
-    fakeredis = python.fakeredis;
+    burnerRedis = python."burner-redis";
     hatchVcs = python."hatch-vcs";
     opentelemetryApi = python."opentelemetry-api";
     prometheusClient = python."prometheus-client";

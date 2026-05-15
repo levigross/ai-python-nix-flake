@@ -8,14 +8,14 @@
 }:
 buildPythonPackage rec {
   pname = "gepa";
-  version = "0.0.26";
+  version = "0.0.27";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "gepa-ai";
     repo = "gepa";
     rev = "v${version}";
-    hash = "sha256-zkGD9QlBV9UckmJrLeMtU68jdh3YS5d+rwTUUMpvUUc=";
+    hash = "sha256-5IXXE76Nb2Lc+6wQmLIw4zmsWMhVOCvRLXLXZjMFhec=";
   };
 
   build-system = [
@@ -26,7 +26,7 @@ buildPythonPackage rec {
 
   postPatch = ''
     substituteInPlace pyproject.toml \
-      --replace-fail 'version="0.0.25"' 'version="${version}"' \
+      --replace-fail 'version="0.0.26"' 'version="${version}"' \
       --replace-fail 'license = { text = "MIT" }' 'license = "MIT"'
   '';
 

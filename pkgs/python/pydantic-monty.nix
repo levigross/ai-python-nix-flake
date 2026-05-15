@@ -10,19 +10,19 @@
 }:
 buildPythonPackage rec {
   pname = "pydantic-monty";
-  version = "0.0.11";
+  version = "0.0.16";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "pydantic";
     repo = "monty";
     rev = "v${version}";
-    hash = "sha256-PRP8XcgeNVnc+2dWHxpizjvAtSjfqtkEXckXjPCRoJI=";
+    hash = "sha256-UpHGCuoId8zNju3sQeSnt8J6Jh24na2u9/zDWrZKQWs=";
   };
 
   cargoDeps = rustPlatform.fetchCargoVendor {
     inherit src;
-    hash = "sha256-L18Prmtv+jKs8jG1HNSMp4hDwpDgLc1x9CV39WYFUK8=";
+    hash = "sha256-d8m5CJxkN4j/YEoXWrUMbsEjAXc/lNyTZ1Zq4RMosmw=";
   };
 
   buildAndTestSubdir = "crates/monty-python";

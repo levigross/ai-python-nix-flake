@@ -30,6 +30,7 @@
     openai = python.openai;
     prefabUi = python."prefab-ui";
     pydanticMonty = python."pydantic-monty";
+    pydanticSettings = python."pydantic-settings";
     pydocket = python.pydocket;
     psutil = python.psutil;
     pytestAsyncio = python."pytest-asyncio";
@@ -39,6 +40,8 @@
     pytestXdist = python."pytest-xdist";
     pyKeyValueAio = python."py-key-value-aio";
     pythonDotenv = python."python-dotenv";
+    pythonMultipart = python."python-multipart";
+    typingExtensions = python."typing-extensions";
     uncalledFor = python."uncalled-for";
     uv = python.uv;
     uvDynamicVersioning = python."uv-dynamic-versioning";

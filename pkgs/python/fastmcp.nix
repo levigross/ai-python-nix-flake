@@ -24,13 +24,16 @@
   opentelemetrySdk,
   openai,
   pydanticMonty,
+  pydanticSettings,
   prefabUi,
   packaging,
   platformdirs,
   pydocket,
+  pyjwt,
   pyKeyValueAio,
   pydantic,
   pyperclip,
+  pythonMultipart,
   pytestCheckHook,
   pytestAsyncio,
   pytestHttpx,
@@ -43,6 +46,7 @@
   uv,
   pyyaml,
   rich,
+  typingExtensions,
   uncalledFor,
   uvicorn,
   watchfiles,
@@ -50,19 +54,34 @@
 }:
 buildPythonPackage rec {
   pname = "fastmcp";
-  version = "3.2.4";
+  version = "3.3.0";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "PrefectHQ";
     repo = "fastmcp";
     rev = "v${version}";
-    hash = "sha256-rJpxPvqAaa6/vXhG1+R9dI32cY/54e6I+F/zyBVoqBM=";
+    hash = "sha256-17qRhfsCCypiXMvo5u0QeYZzYXb4gkFl92jpYkBvdbw=";
   };
+
+  # Upstream restructured 3.3.0: the actual code lives in `fastmcp_slim/`,
+  # while the top-level `fastmcp` package is now a meta-distribution that
+  # depends on `fastmcp-slim[client,server]`. We build the slim package
+  # directly — it provides the `fastmcp` Python module that consumers import.
+  sourceRoot = "${src.name}/fastmcp_slim";
 
   build-system = [
     hatchling
     uvDynamicVersioning
+  ];
+
+  # nixpkgs ships older versions of a few transitive deps than the strict
+  # upper-bound floors in the slim pyproject; the differences are API-compatible
+  # patch-level mismatches that show up only in pythonRuntimeDepsCheck.
+  pythonRelaxDeps = [
+    "PyJWT"
+    "python-multipart"
+    "pydocket"
   ];
 
   dependencies = [
@@ -85,13 +104,17 @@ buildPythonPackage rec {
     platformdirs
     prefabUi
     pydanticMonty
+    pydanticSettings
     pydocket
+    pyjwt
     pyKeyValueAio
     pydantic
     pyperclip
     pythonDotenv
+    pythonMultipart
     pyyaml
     rich
+    typingExtensions
     uncalledFor
     uvicorn
     watchfiles
@@ -114,6 +137,30 @@ buildPythonPackage rec {
   ];
 
   preCheck = ''
+            # Tests live at the top-level of the tarball (above fastmcp_slim/).
+            # Bring them into the slim build dir so pytest can find them, then
+            # write a pytest config alongside since the slim pyproject doesn't
+            # carry the upstream pytest options (those live in the top-level
+            # meta pyproject).
+            cp -r ../tests ./tests
+            cat > pytest.ini <<'INI'
+    [pytest]
+    asyncio_mode = auto
+    asyncio_default_fixture_loop_scope = function
+    testpaths = tests
+    addopts = --inline-snapshot=disable
+    env =
+        D:FASTMCP_LOG_LEVEL=DEBUG
+    markers =
+        integration: marks tests as integration tests
+        client_process: marks tests that spawn client processes via stdio transport
+        conformance: marks MCP conformance tests
+    filterwarnings =
+        ignore:Using in-memory token storage:UserWarning
+    INI
+
+            export FASTMCP_TEST_MODE=1
+
             # uv-based transport tests need writable cache dirs and must avoid managed
             # Python discovery (which probes non-Nix FHS paths).
             export HOME="$TMPDIR/home"

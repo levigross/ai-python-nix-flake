@@ -23,26 +23,34 @@
   requests,
   tenacity,
   tqdm,
+  typeguard,
   xxhash,
 }:
 buildPythonPackage rec {
   pname = "dspy";
-  version = "3.1.3";
+  version = "3.2.1";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "stanfordnlp";
     repo = "dspy";
     rev = version;
-    hash = "sha256-Mfl5ac367QnFgSHXTItBAQ0ksHR1mEKIjyptAbt/Bvc=";
+    hash = "sha256-xquV+FyDfejm1SCWYfuiezIkyutmm/1zOvd5X+oElrM=";
   };
 
   build-system = [setuptools];
 
   postPatch = ''
     substituteInPlace pyproject.toml \
-      --replace-fail 'version="3.1.2"' 'version="${version}"'
+      --replace-fail 'version="3.2.0"' 'version="${version}"'
   '';
+
+  # Upstream pins cloudpickle>=3.1.2 and typeguard==4.4.3; nixpkgs ships
+  # 3.1.1 and 4.4.4 respectively. Both diffs are patch-level and API-compatible.
+  pythonRelaxDeps = [
+    "cloudpickle"
+    "typeguard"
+  ];
 
   dependencies = [
     anyio
@@ -62,6 +70,7 @@ buildPythonPackage rec {
     requests
     tenacity
     tqdm
+    typeguard
     xxhash
   ];
 
